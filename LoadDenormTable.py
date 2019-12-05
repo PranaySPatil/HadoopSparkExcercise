@@ -1,5 +1,20 @@
 airport_codes = spark.read.format("csv").option("header", "true").option("inferSchema", "true").load("/user/root/codes_data/airport/L_AIRPORT.csv")
 carrier_codes = spark.read.format("csv").option("header", "true").option("inferSchema", "true").load("/user/root/codes_data/carrier_history/L_CARRIER_HISTORY.csv")
+
+#Filtering
+def inRange(s):
+    i=s.rfind("(")
+    j=s.rfind(")")
+    r = s[i+1:j]
+    ii=r.split('-')
+    if len(ii[1])<5:
+            return int(ii[0]) <= 2016
+    else:
+            return int(ii[0]) <= 2016 and int(ii[1]) > 2016
+from pyspark.sql.functions import udf
+from pyspark.sql.types import BooleanType
+carrier_codes = carrier_codes.filter(udf(lambda target: inRange(target),  BooleanType())(carrier_codes.Description))
+
 flight_data = spark.read.format("csv").option("header", "true").option("inferSchema", "true").load("/user/root/flight_data/*.csv")
 flight_airport_join = flight_data.join(airport_codes, flight_data.ORIGIN == airport_codes.Code)
 flight_airport_join = flight_airport_join.drop(flight_airport_join.Code).withColumnRenamed("Description", "SOURCE")
