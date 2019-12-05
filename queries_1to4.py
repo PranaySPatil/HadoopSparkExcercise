@@ -1,3 +1,6 @@
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.master("yarn").appName("my app").enableHiveSupport().getOrCreate()
+
 #Q1
 flight_data_orc2 = spark.table("flights.flight_data_orc2")
 flightDF = flight_data_orc2.groupBy(flight_data_orc2.origin).agg({"dep_delay":"avg"}).withColumnRenamed("avg(dep_delay)", "avg_dep_delay")

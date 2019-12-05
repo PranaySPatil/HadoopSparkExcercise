@@ -1,3 +1,6 @@
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.master("yarn").appName("my app").enableHiveSupport().getOrCreate()
+
 airport_codes = spark.read.format("csv").option("header", "true").option("inferSchema", "true").load("/user/root/codes_data/airport/L_AIRPORT.csv")
 carrier_codes = spark.read.format("csv").option("header", "true").option("inferSchema", "true").load("/user/root/codes_data/carrier_history/L_CARRIER_HISTORY.csv")
 
