@@ -1,0 +1,12 @@
+CREATE EXTERNAL TABLE flights.carrier_code (
+  CODE STRING,
+  DESCRIPTION STRING
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+LOCATION '/user/root/codes_data/carrier_history';
+CREATE EXTERNAL TABLE flights.airport_code (
+  CODE STRING,
+  DESCRIPTION STRING
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+LOCATION '/user/root/codes_data/airport';
