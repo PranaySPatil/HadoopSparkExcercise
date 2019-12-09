@@ -14,6 +14,7 @@ def inRange(s):
             return int(ii[0]) <= 2016
     else:
             return int(ii[0]) <= 2016 and int(ii[1]) > 2016
+            
 from pyspark.sql.functions import udf
 from pyspark.sql.types import BooleanType
 carrier_codes = carrier_codes.filter(udf(lambda target: inRange(target),  BooleanType())(carrier_codes.Description))
