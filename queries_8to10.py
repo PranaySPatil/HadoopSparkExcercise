@@ -9,7 +9,7 @@ spark = SparkSession.builder.master("yarn").appName("my app").enableHiveSupport(
 flight_data_denorm = spark.table("flights.flight_data_denorm")
 
 
-@f.udf(returnType=BooleanType())
+udf(returnType=BooleanType())
 def dateFilter(date):
     start_date = '12/20/2016'
     formatted_start_date = datetime.strptime(start_date, '%m/%d/%Y')
@@ -24,7 +24,7 @@ df.show()
 
 
 # Q9
-@f.udf(returnType=BooleanType())
+udf(returnType=BooleanType())
 def myFilter(dest):
     return dest.split(':')[0].split(',')[1] == ' MT'
 

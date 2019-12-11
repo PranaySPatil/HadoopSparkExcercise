@@ -1,3 +1,6 @@
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.master("yarn").appName("my app").enableHiveSupport().getOrCreate()
+
 #Q5
 flight_data_denorm = spark.table("flights.flight_data_denorm")
 flight_data_denorm.filter(flight_data_denorm. AIRPORT_NAMES.SOURCE.contains("Beaumont")).agg({"DEP_DELAY":"sum"}).show()
